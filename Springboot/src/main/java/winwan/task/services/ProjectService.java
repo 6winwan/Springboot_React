@@ -16,6 +16,7 @@ public class ProjectService {
 	
 	public Project saveOrUpdateProject(Project project) {
 		
+		// if projectId does not exist save project, not return exception
 		try{
 			project.setProjectIdentifier(project.getProjectIdentifier().toUpperCase());
 			return projectRepository.save(project);
@@ -23,4 +24,24 @@ public class ProjectService {
 			throw new ProjectIdException("Project ID '" + project.getProjectIdentifier().toUpperCase() + "' already exist");
 		}
 	}
+	
+	
+	public Project findProjectByIdentifier(String projectId) {
+		
+		// get project by projecId
+		Project project = projectRepository.findByProjectIdentifier(projectId.toUpperCase());
+		
+		// if project is null get exception message
+		if(project == null) {
+			throw new ProjectIdException("Project does not exist");
+		}
+		return project;
+	}
+	
+	
+	public Iterable<Project> findAllProjects(){
+		return projectRepository.findAll();
+	}
+	
+	
 }

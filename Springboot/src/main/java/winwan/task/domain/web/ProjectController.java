@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +27,7 @@ public class ProjectController {
 	@Autowired
 	private MapValidationErrorService mapValidationErrorService;
 	
+	// Post method to register Project
 	@PostMapping("")
 	public ResponseEntity<?> createNewProject(@Valid @RequestBody Project project, BindingResult result){
 		
@@ -35,5 +38,20 @@ public class ProjectController {
 		Project project1 = projectService.saveOrUpdateProject(project);
 		return new ResponseEntity<Project>(project1, HttpStatus.CREATED);
 	}	
+	
+	// Get method to get a project by projectId
+	@GetMapping("/{projectId}")
+	public ResponseEntity<?> getProjectById(@PathVariable String projectId){
+		
+		Project project = projectService.findProjectByIdentifier(projectId);
+		
+		return new ResponseEntity<Project>(project, HttpStatus.OK);
+	}
+	
+	// Get method to get all projects
+	@GetMapping("/all")
+	public Iterable<Project> getAllProject(){
+		return projectService.findAllProjects();
+	}
 	
 }
