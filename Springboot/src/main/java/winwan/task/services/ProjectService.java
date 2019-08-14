@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 
 import winwan.task.domain.Project;
 import winwan.task.exceptions.ProjectIdException;
-import winwan.task.exceptions.ProjectNotFoundException;
 import winwan.task.repositories.ProjectRepository;
 
 @Service
@@ -17,12 +16,6 @@ public class ProjectService {
 	
 	public Project saveOrUpdateProject(Project project) {
 		
-		if(project.getId()!=null) {
-			Project existingProject = projectRepository.findByProjectIdentifier(project.getProjectIdentifier());
-			if(existingProject != null) {
-				throw new ProjectNotFoundException("Project with ID: '"+project.getProjectIdentifier()+"' cannot be updated because does not exist");
-			}
-		}
 		// if projectId does not exist save project, not return exception
 		try{
 			project.setProjectIdentifier(project.getProjectIdentifier().toUpperCase());
