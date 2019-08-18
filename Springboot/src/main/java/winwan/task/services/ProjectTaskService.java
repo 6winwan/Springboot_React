@@ -1,5 +1,7 @@
 package winwan.task.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -95,4 +97,30 @@ public class ProjectTaskService {
 		
 		return projectTask;
 	}
+	
+	public ProjectTask updateByProjectSequence(ProjectTask updatedTask, String backlog_id, String pt_id) {
+		ProjectTask projectTask = findPTByProjectSequence(backlog_id, pt_id);
+		
+		projectTask = updatedTask;
+		
+		return projectTaskRepository.save(projectTask);
+	}
+	
+	
+	public void deleteProjectSequence(String backlog_id, String pt_id) {
+		ProjectTask projectTask = findPTByProjectSequence(backlog_id, pt_id);
+		
+		/*
+		Backlog backlog = projectTask.getBacklog();
+		List<ProjectTask> pts = backlog.getProjectTask();
+		pts.remove(projectTask);
+		backlogRepository.save(backlog);
+		*/
+		projectTaskRepository.delete(projectTask);
+	}
+	
+	
 }
+
+
+
