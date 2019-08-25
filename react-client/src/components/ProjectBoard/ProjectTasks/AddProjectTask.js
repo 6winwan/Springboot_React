@@ -59,7 +59,6 @@ class AddProjectTask extends Component {
     const { id } = this.props.match.params;
     const { errors } = this.state;
     return (
-      <div className>
         <div className="container">
           <div className="row">
             <div className="col-md-8 m-auto">
@@ -136,7 +135,6 @@ class AddProjectTask extends Component {
             </div>
           </div>
         </div>
-      </div>
     )
   }
 }
