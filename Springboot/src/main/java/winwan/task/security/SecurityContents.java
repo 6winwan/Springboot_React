@@ -12,6 +12,7 @@ public class SecurityContents {
 	
 	public static final String HEADER_STRING ="Authorization";
 	
-	public static final String EXPERATION_TIME = "30_0000"; //30 seconds
+	public static final long EXPIRATION_TIME = 120_000; //120 seconds
+	
 }
 

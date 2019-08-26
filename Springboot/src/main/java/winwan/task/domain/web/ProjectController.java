@@ -1,5 +1,7 @@
 package winwan.task.domain.web;
 
+import java.security.Principal;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,35 +34,35 @@ public class ProjectController {
 	
 	// Post method to register Project
 	@PostMapping("")
-	public ResponseEntity<?> createNewProject(@Valid @RequestBody Project project, BindingResult result){
+	public ResponseEntity<?> createNewProject(@Valid @RequestBody Project project, BindingResult result, Principal principal){
 		
 		// If there are errors, errors messages are saved in errorMap and response with BAD_Request
 		ResponseEntity<?> errorMap = mapValidationErrorService.MapValidationService(result);
 		if(errorMap!=null) return errorMap;
 		
-		Project project1 = projectService.saveOrUpdateProject(project);
+		Project project1 = projectService.saveOrUpdateProject(project, principal.getName());
 		return new ResponseEntity<Project>(project1, HttpStatus.CREATED);
 	}	
 	
 	// Get method to get a project by projectId
 	@GetMapping("/{projectId}")
-	public ResponseEntity<?> getProjectById(@PathVariable String projectId){
+	public ResponseEntity<?> getProjectById(@PathVariable String projectId, Principal principal){
 		
-		Project project = projectService.findProjectByIdentifier(projectId);
+		Project project = projectService.findProjectByIdentifier(projectId, principal.getName());
 		
 		return new ResponseEntity<Project>(project, HttpStatus.OK);
 	}
 	
 	// Get method to get all projects
 	@GetMapping("/all")
-	public Iterable<Project> getAllProject(){
-		return projectService.findAllProjects();
+	public Iterable<Project> getAllProject(Principal principal){
+		return projectService.findAllProjects(principal.getName());
 	}
 	
 	// Delete method to delete project by ProjectId
 	@DeleteMapping("/{projectId}")
-	public ResponseEntity<?> deleteProject(@PathVariable String projectId) {
-		projectService.deleteProjectByIdentifier(projectId);
+	public ResponseEntity<?> deleteProject(@PathVariable String projectId, Principal principal) {
+		projectService.deleteProjectByIdentifier(projectId, principal.getName());
 		
 		return new ResponseEntity<String>("project with ID: '"+projectId+"' was deleted", HttpStatus.OK);
 	}
