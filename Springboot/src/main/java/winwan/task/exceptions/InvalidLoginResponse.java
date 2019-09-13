@@ -2,11 +2,11 @@ package winwan.task.exceptions;
 
 public class InvalidLoginResponse {
 	private String username;
-	private String passowrd;
+	private String password;
 	
 	public InvalidLoginResponse() {
 		this.username = "Invalid Username";
-		this.passowrd = "Invalid Password";
+		this.password = "Invalid Password";
 	}
 	
 	public String getUsername() {
@@ -17,12 +17,12 @@ public class InvalidLoginResponse {
 		this.username = username;
 	}
 	
-	public String getPassowrd() {
-		return passowrd;
+	public String getPassword() {
+		return password;
 	}
 	
-	public void setPassowrd(String passowrd) {
-		this.passowrd = passowrd;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 	
 	
